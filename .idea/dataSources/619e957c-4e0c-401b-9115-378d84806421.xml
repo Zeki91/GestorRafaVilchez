@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - gestor_academia@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+    <schema id="1" name="gestor_academia">
+      <visible>1</visible>
+    </schema>
+    <schema id="2" name="information_schema"/>
+    <schema id="3" name="test"/>
+    <table id="4" parent="1" name="alumno">
+      <comment>Datos de un alumno</comment>
+    </table>
+    <table id="5" parent="1" name="asignatura"/>
+    <table id="6" parent="1" name="profesor"/>
+    <table id="7" parent="1" name="usuario"/>
+    <table id="8" parent="1" name="alumno_asignatura"/>
+    <table id="9" parent="1" name="descuento"/>
+    <table id="10" parent="1" name="descuentos_alumnos"/>
+    <table id="11" parent="1" name="entrada_recibo"/>
+    <table id="12" parent="1" name="horas_extra"/>
+    <table id="13" parent="1" name="recibo"/>
+    <table id="14" parent="1" name="movimiento"/>
+    <table id="15" parent="1" name="caja"/>
+    <column id="16" parent="4" name="idAlumno">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="17" parent="4" name="nombre">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="18" parent="4" name="apellidos">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="19" parent="4" name="telefono">
+      <mandatory>1</mandatory>
+      <data-type>varchar(9)|0</data-type>
+    </column>
+    <column id="20" parent="4" name="email">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="21" parent="4" name="nif">
+      <mandatory>1</mandatory>
+      <data-type>varchar(9)|0</data-type>
+    </column>
+    <column id="22" parent="4" name="direccion">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="23" parent="4" name="cp">
+      <mandatory>1</mandatory>
+      <data-type>varchar(5)|0</data-type>
+    </column>
+    <column id="24" parent="4" name="poblacion">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="25" parent="4" name="provincia">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="26" parent="4" name="rrss">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="27" parent="4" name="vulebu">
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="28" parent="4" name="createdAt">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <key id="29" parent="4" name="PRIMARY">
+      <columns>idAlumno</columns>
+      <primary>1</primary>
+    </key>
+    <column id="30" parent="5" name="idAsignatura">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="31" parent="5" name="nombre">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="32" parent="5" name="precioBruto">
+      <mandatory>1</mandatory>
+      <data-type>float|0</data-type>
+    </column>
+    <column id="33" parent="5" name="idProfesor">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="34" parent="5" name="descuento">
+      <comment>Indica si se le puede aplicar el descuento VULEBU</comment>
+      <mandatory>1</mandatory>
+      <data-type>tinyint(1)|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="35" parent="5" name="createdAt">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <index id="36" parent="5" name="idProfesor">
+      <columns>idProfesor</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="37" parent="5" name="PRIMARY">
+      <columns>idAsignatura</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="38" parent="5" name="asignatura_ibfk_idProfesor">
+      <columns>idProfesor</columns>
+      <ref-key>~.profesor.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="39" parent="6" name="idProfesor">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="40" parent="6" name="nombre">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="41" parent="6" name="apellidos">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="42" parent="6" name="fechaNacimiento">
+      <mandatory>1</mandatory>
+      <data-type>date|0</data-type>
+    </column>
+    <column id="43" parent="6" name="sueldo">
+      <mandatory>1</mandatory>
+      <data-type>float|0</data-type>
+    </column>
+    <column id="44" parent="6" name="telefono">
+      <mandatory>1</mandatory>
+      <data-type>varchar(9)|0</data-type>
+    </column>
+    <column id="45" parent="6" name="cuentaBancaria">
+      <mandatory>1</mandatory>
+      <data-type>varchar(24)|0</data-type>
+    </column>
+    <column id="46" parent="6" name="createdAt">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <key id="47" parent="6" name="PRIMARY">
+      <columns>idProfesor</columns>
+      <primary>1</primary>
+    </key>
+    <column id="48" parent="7" name="idUsuario">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="49" parent="7" name="email">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="50" parent="7" name="password">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="51" parent="7" name="rol">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <key id="52" parent="7" name="PRIMARY">
+      <columns>idUsuario</columns>
+      <primary>1</primary>
+    </key>
+    <column id="53" parent="8" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="54" parent="8" name="idAlumno">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="55" parent="8" name="idAsignatura">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="56" parent="8" name="fecha_inicio">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="57" parent="8" name="fecha_fin">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="58" parent="8" name="importeEditado">
+      <data-type>float|0</data-type>
+    </column>
+    <column id="59" parent="8" name="fechaMod">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="60" parent="8" name="observaciones">
+      <data-type>date|0</data-type>
+    </column>
+    <index id="61" parent="8" name="fk_alumno_asignatura_1_idx">
+      <columns>idAlumno</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="62" parent="8" name="fk_alumno_asignatura_asignatura_idx">
+      <columns>idAsignatura</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="63" parent="8" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="64" parent="8" name="fk_alumno_asignatura_alumno">
+      <columns>idAlumno</columns>
+      <ref-key>~.alumno.PRIMARY</ref-key>
+      <cascade-update-rule>update</cascade-update-rule>
+      <cascade-delete-rule>set_null</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="65" parent="8" name="fk_alumno_asignatura_asignatura">
+      <columns>idAsignatura</columns>
+      <ref-key>~.asignatura.PRIMARY</ref-key>
+      <cascade-update-rule>update</cascade-update-rule>
+      <cascade-delete-rule>set_null</cascade-delete-rule>
+    </foreign-key>
+    <column id="66" parent="9" name="idDescuento">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="67" parent="9" name="nombre">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <key id="68" parent="9" name="PRIMARY">
+      <columns>idDescuento</columns>
+      <primary>1</primary>
+    </key>
+    <column id="69" parent="10" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="70" parent="10" name="idDescuento">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="71" parent="10" name="idAsignatura">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="72" parent="10" name="idAlumno">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="73" parent="10" name="activo">
+      <data-type>tinyint(1)|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="74" parent="10" name="cantidad">
+      <data-type>float|0</data-type>
+    </column>
+    <column id="75" parent="10" name="porcentaje">
+      <data-type>float|0</data-type>
+    </column>
+    <column id="76" parent="10" name="referidoPor">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="77" parent="10" name="refiereA">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <index id="78" parent="10" name="fk_descuentos_asignaturas_alumno_idx">
+      <columns>idAlumno</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="79" parent="10" name="fk_descuentos_asignaturas_asignatura_idx">
+      <columns>idAsignatura</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="80" parent="10" name="fk_descuentos_asignaturas_descuento_idx">
+      <columns>idDescuento</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="81" parent="10" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="82" parent="11" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="83" parent="11" name="codRecibo">
+      <data-type>varchar(9)|0</data-type>
+    </column>
+    <column id="84" parent="11" name="tipoEntrada">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="85" parent="11" name="concepto">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="86" parent="11" name="tipoDescuento">
+      <comment>Tipo de descuento: Porcentual o absoluto</comment>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="87" parent="11" name="descuento">
+      <comment>Cantidad a descontar</comment>
+      <data-type>float|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="88" parent="11" name="cantidad">
+      <comment>Cantidad a pagar después de aplicar el descuento</comment>
+      <data-type>float|0</data-type>
+    </column>
+    <column id="89" parent="11" name="observaciones">
+      <comment>Tipo de entrada (asignatura, descuento, hora extra)</comment>
+      <data-type>text|0</data-type>
+    </column>
+    <index id="90" parent="11" name="fk_entrada_recibo_recibo_idx">
+      <columns>codRecibo</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="91" parent="11" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="92" parent="11" name="fk_entrada_recibo_recibo">
+      <columns>codRecibo</columns>
+      <ref-key>~.recibo.PRIMARY</ref-key>
+      <cascade-update-rule>update</cascade-update-rule>
+      <cascade-delete-rule>no_action</cascade-delete-rule>
+    </foreign-key>
+    <column id="93" parent="12" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="94" parent="12" name="idAsignatura">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="95" parent="12" name="idAlumno">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="96" parent="12" name="numHoras">
+      <data-type>float|0</data-type>
+    </column>
+    <column id="97" parent="12" name="precio">
+      <data-type>float|0</data-type>
+    </column>
+    <column id="98" parent="12" name="mes">
+      <data-type>int(2)|0</data-type>
+    </column>
+    <column id="99" parent="12" name="anyo">
+      <data-type>int(4)|0</data-type>
+    </column>
+    <index id="100" parent="12" name="fk_horas_extra_alumno_idx">
+      <columns>idAlumno</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="101" parent="12" name="fk_horas_extra_asignatura_idx">
+      <columns>idAsignatura</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="102" parent="12" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="103" parent="12" name="fk_horas_extra_asignatura">
+      <columns>idAsignatura</columns>
+      <ref-key>~.asignatura.PRIMARY</ref-key>
+      <cascade-update-rule>update</cascade-update-rule>
+      <cascade-delete-rule>set_null</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="104" parent="12" name="fk_horas_extra_alumno">
+      <columns>idAlumno</columns>
+      <ref-key>~.alumno.PRIMARY</ref-key>
+      <cascade-update-rule>update</cascade-update-rule>
+      <cascade-delete-rule>set_null</cascade-delete-rule>
+    </foreign-key>
+    <column id="105" parent="13" name="codRecibo">
+      <mandatory>1</mandatory>
+      <data-type>varchar(9)|0</data-type>
+    </column>
+    <column id="106" parent="13" name="idAlumno">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="107" parent="13" name="mes">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="108" parent="13" name="anyo">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="109" parent="13" name="fechaEmision">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="110" parent="13" name="fechaPago">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="111" parent="13" name="cantidadTotal">
+      <data-type>float|0</data-type>
+    </column>
+    <column id="112" parent="13" name="observaciones">
+      <data-type>float|0</data-type>
+    </column>
+    <index id="113" parent="13" name="fk_recibo_alumno_idx">
+      <columns>idAlumno</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="114" parent="13" name="PRIMARY">
+      <columns>codRecibo</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="115" parent="13" name="fk_recibo_alumno">
+      <columns>idAlumno</columns>
+      <ref-key>~.alumno.PRIMARY</ref-key>
+      <cascade-update-rule>update</cascade-update-rule>
+      <cascade-delete-rule>set_null</cascade-delete-rule>
+    </foreign-key>
+    <column id="116" parent="14" name="idMovimiento">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="117" parent="14" name="tipo">
+      <mandatory>1</mandatory>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="118" parent="14" name="concepto">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="119" parent="14" name="descripción">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="120" parent="14" name="fecha">
+      <mandatory>1</mandatory>
+      <data-type>date|0</data-type>
+    </column>
+    <column id="121" parent="14" name="importe">
+      <mandatory>1</mandatory>
+      <data-type>float|0</data-type>
+    </column>
+    <key id="122" parent="14" name="PRIMARY">
+      <columns>idMovimiento</columns>
+      <primary>1</primary>
+    </key>
+    <column id="123" parent="15" name="importeTotal">
+      <mandatory>1</mandatory>
+      <data-type>float|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="124" parent="15" name="id">
+      <mandatory>1</mandatory>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <key id="125" parent="15" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+  </database-model>
+</dataSource>

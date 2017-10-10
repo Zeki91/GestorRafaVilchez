@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.impl.CajaMapper">
+
+    <resultMap id="cajaResult" type="com.rafavilchez.model.impl.Caja" extends="com.rafavilchez.persistence.CajaBaseMapper.BaseResultMap">
+    </resultMap>
+
+    <select id="getImporteTotal" resultType="float"  parameterType="map" >
+        select c.importeTotal
+        from caja c
+        where c.id = 1
+    </select>
+
+    <update id="actualizarImporteTotal" parameterType="map">
+        update caja
+        set importeTotal = ${cantidad}
+        where id = 1
+    </update>
+
+</mapper>

@@ -1,0 +1,171 @@
+.bold, strong {
+    font-weight: bold;
+}
+.page-header.navbar .page-logo .logo-default {
+    margin: 8px 0 0px;
+    width: 90px;
+}
+
+label.control-label {
+    padding-top: 7px;
+}
+
+.tabbable-custom>.nav-tabs>li.active {
+    border-top: 3px solid #36c6d3 !important;
+}
+
+.tabbable-custom>.nav-tabs>li>a {
+    margin-right: 0;
+    border-radius: 0;
+    color: #737373;
+}
+
+.tabbable-custom>.nav-tabs>li>a:hover {
+    background: 0 0;
+    border-color: transparent;
+    color: #333;
+}
+
+.tabbable-custom>.nav-tabs>li.active>a {
+    color: #333;
+}
+
+.nota-de-pago {
+    border: 5px double #4382bc;
+    padding: 15px 10px;
+    page-break-inside: avoid;
+    page-break-after: auto;
+    height: 290px;
+}
+
+.nota-de-pago + .nota-de-pago {
+    margin-top: 30px;
+}
+.nota-de-pago .nombre {
+    margin-bottom: 0 !important;
+    font-size: 18px;
+}
+.nota-de-pago .periodo {
+    margin-top: 10px !important;
+}
+.nota-de-pago .logo img {
+    width: 100%;
+    margin-top: 15px;
+}
+.nota-de-pago .listado-asignaturas {
+    margin-bottom: 0;
+}
+
+.nota-de-pago .table.listado-asignaturas td,
+.nota-de-pago .table.listado-asignaturas th {
+    padding: 4px;
+}
+
+.lista-notas-de-pago .tools a i,
+.lista-alumnos .tools a i {
+    color: #fff;
+}
+
+#loader {
+    background-color: black;
+    opacity: 0.2;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    position: absolute;
+}
+
+.nota-de-pago.edit {
+    height: 350px !important;
+}
+.nota-de-pago.edit .logo img {
+    width: 75% !important;
+    margin-top: 0 !important;
+}
+
+.todo-tasklist-item .importe {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.todo-tasklist .importe.green,
+.total-caja span.green {
+    color: #3faba4;
+}
+
+.todo-tasklist .importe.red,
+.total-caja span.red {
+    color: #d05454;
+}
+
+.total-caja {
+    font-size: 20px;
+}
+
+.total-caja span {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.daterangepicker .ranges {
+    width: 186px !important;
+}
+
+.datos-empresa {
+    position: absolute;
+    color: #a09f9f;
+    top: -5px;
+    font-size: 10px;
+    font-style: italic;
+    display: none;
+}
+.datos-empresa.left {
+    left: 25px;
+}
+.datos-empresa.right {
+    right: 25px;
+}
+.datos-recibo {
+    position: absolute;
+    color: #a09f9f;
+    bottom: 0;
+    left: 25px;
+    font-size: 10px;
+    font-style: italic;
+    display: none;
+}
+
+@media print {
+
+    .nota-de-pago {
+        width: 100%;
+        padding: 15px 10px;
+        page-break-inside: avoid;
+    }
+
+    .nota-de-pago .nombre {
+        margin-bottom: 0 !important;
+        font-size: 18px;
+    }
+    .nota-de-pago .periodo {
+        margin-top: 10px !important;
+    }
+    .nota-de-pago .logo img {
+        width: 100%;
+    }
+    .nota-de-pago .listado-asignaturas {
+        margin-bottom: 0;
+    }
+    .page-break-after {
+        display: block;
+        page-break-after: always;
+        position: relative;
+        page-break-inside: avoid;
+    }
+    .page-break-before {
+        display: block;
+        page-break-before: always;
+        position: relative;
+        page-break-inside: avoid;
+    }
+}

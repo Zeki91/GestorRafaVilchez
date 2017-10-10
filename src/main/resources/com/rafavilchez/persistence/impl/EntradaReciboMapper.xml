@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.impl.EntradaReciboMapper">
+
+    <resultMap id="entradaReciboResult" type="com.rafavilchez.model.impl.EntradaRecibo" extends="com.rafavilchez.persistence.EntradaReciboBaseMapper.BaseResultMap">
+    </resultMap>
+
+    <select id="getEntradasReciboPorCodRecibo" resultMap="entradaReciboResult"  parameterType="map" >
+        select er.*
+        from entrada_recibo er
+        where er.codRecibo = #{codRecibo}
+    </select>
+
+    <select id="getEntradaReciboPorId" resultMap="entradaReciboResult"  parameterType="map" >
+        select er.*
+        from entrada_recibo er
+        where er.id = #{id}
+    </select>
+
+    <delete id="deleteWithCodRecibo" parameterType="map">
+        DELETE from entrada_recibo
+         WHERE codRecibo = '${codRecibo}';
+    </delete>
+
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.impl.AlumnoAsignaturaMapper">
+
+    <resultMap id="alumnoAsignaturaResult" type="com.rafavilchez.model.impl.AlumnoAsignatura" extends="com.rafavilchez.persistence.AlumnoAsignaturaBaseMapper.BaseResultMap">
+    </resultMap>
+
+    <resultMap id="alumnoAsignaturaResultConAsignatura" type="com.rafavilchez.model.impl.AlumnoAsignatura" extends="com.rafavilchez.persistence.AlumnoAsignaturaBaseMapper.BaseResultMap">
+        <association property="asignatura" column="{idAsignatura=idAsignatura}" javaType="com.rafavilchez.model.impl.Asignatura"
+                     select="com.rafavilchez.persistence.impl.AsignaturaMapper.getAsignaturaPorId"/>
+    </resultMap>
+
+    <select id="getPorIdAlumno" resultMap="alumnoAsignaturaResultConAsignatura"  parameterType="map" >
+        select aa.*, a.*
+        from alumno_asignatura aa, asignatura a
+        where aa.idAlumno = ${idAlumno}
+        and aa.idAsignatura = a.idAsignatura
+    </select>
+
+    <select id="getPorIdAsignatura" resultMap="alumnoAsignaturaResult"  parameterType="map" >
+        select aa.*
+        from alumno_asignatura aa
+        where idAsignatura = ${idAsignatura}
+    </select>
+
+    <select id="getPorIdAsignaturaAndIdAlumno" resultMap="alumnoAsignaturaResultConAsignatura"  parameterType="map" >
+        select aa.*
+        from alumno_asignatura aa
+        where idAsignatura = ${idAsignatura}
+        and idAlumno = ${idAlumno}
+        and aa.fecha_fin is null
+    </select>
+
+    <select id="getAlumnosMatriculados" resultMap="com.rafavilchez.persistence.impl.AlumnoMapper.alumnoResultCompleto" parameterType="map" >
+        select a.*
+        from alumno_asignatura aa, alumno a
+        where aa.idAsignatura = ${idAsignatura}
+        and aa.idAlumno = a.idAlumno
+        and aa.fecha_fin is null
+    </select>
+
+    <delete id="desmatricularAlumnos" parameterType="map">
+        delete from alumno_asignatura
+        where idAsignatura = ${idAsignatura}
+    </delete>
+
+</mapper>

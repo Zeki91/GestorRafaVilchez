@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.ReciboBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.rafavilchez.model.ReciboBase" >
+    <id column="codRecibo" property="codRecibo" jdbcType="VARCHAR" />
+    <result column="idAlumno" property="idAlumno" jdbcType="INTEGER" />
+    <result column="mes" property="mes" jdbcType="INTEGER" />
+    <result column="anyo" property="anyo" jdbcType="INTEGER" />
+    <result column="fechaEmision" property="fechaEmision" jdbcType="DATE" />
+    <result column="fechaPago" property="fechaPago" jdbcType="DATE" />
+    <result column="cantidadTotal" property="cantidadTotal" jdbcType="REAL" />
+    <result column="observaciones" property="observaciones" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    codRecibo, idAlumno, mes, anyo, fechaEmision, fechaPago, cantidadTotal, observaciones
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.rafavilchez.model.ReciboBaseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from recibo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from recibo
+    where codRecibo = #{codRecibo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from recibo
+    where codRecibo = #{codRecibo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.rafavilchez.model.ReciboBaseExample" >
+    delete from recibo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.rafavilchez.model.ReciboBase" >
+    insert into recibo (codRecibo, idAlumno, mes, 
+      anyo, fechaEmision, fechaPago, 
+      cantidadTotal, observaciones)
+    values (#{codRecibo,jdbcType=VARCHAR}, #{idAlumno,jdbcType=INTEGER}, #{mes,jdbcType=INTEGER}, 
+      #{anyo,jdbcType=INTEGER}, #{fechaEmision,jdbcType=DATE}, #{fechaPago,jdbcType=DATE}, 
+      #{cantidadTotal,jdbcType=REAL}, #{observaciones,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rafavilchez.model.ReciboBase" >
+    insert into recibo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="codRecibo != null" >
+        codRecibo,
+      </if>
+      <if test="idAlumno != null" >
+        idAlumno,
+      </if>
+      <if test="mes != null" >
+        mes,
+      </if>
+      <if test="anyo != null" >
+        anyo,
+      </if>
+      <if test="fechaEmision != null" >
+        fechaEmision,
+      </if>
+      <if test="fechaPago != null" >
+        fechaPago,
+      </if>
+      <if test="cantidadTotal != null" >
+        cantidadTotal,
+      </if>
+      <if test="observaciones != null" >
+        observaciones,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="codRecibo != null" >
+        #{codRecibo,jdbcType=VARCHAR},
+      </if>
+      <if test="idAlumno != null" >
+        #{idAlumno,jdbcType=INTEGER},
+      </if>
+      <if test="mes != null" >
+        #{mes,jdbcType=INTEGER},
+      </if>
+      <if test="anyo != null" >
+        #{anyo,jdbcType=INTEGER},
+      </if>
+      <if test="fechaEmision != null" >
+        #{fechaEmision,jdbcType=DATE},
+      </if>
+      <if test="fechaPago != null" >
+        #{fechaPago,jdbcType=DATE},
+      </if>
+      <if test="cantidadTotal != null" >
+        #{cantidadTotal,jdbcType=REAL},
+      </if>
+      <if test="observaciones != null" >
+        #{observaciones,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.rafavilchez.model.ReciboBaseExample" resultType="java.lang.Integer" >
+    select count(*) from recibo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update recibo
+    <set >
+      <if test="record.codRecibo != null" >
+        codRecibo = #{record.codRecibo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idAlumno != null" >
+        idAlumno = #{record.idAlumno,jdbcType=INTEGER},
+      </if>
+      <if test="record.mes != null" >
+        mes = #{record.mes,jdbcType=INTEGER},
+      </if>
+      <if test="record.anyo != null" >
+        anyo = #{record.anyo,jdbcType=INTEGER},
+      </if>
+      <if test="record.fechaEmision != null" >
+        fechaEmision = #{record.fechaEmision,jdbcType=DATE},
+      </if>
+      <if test="record.fechaPago != null" >
+        fechaPago = #{record.fechaPago,jdbcType=DATE},
+      </if>
+      <if test="record.cantidadTotal != null" >
+        cantidadTotal = #{record.cantidadTotal,jdbcType=REAL},
+      </if>
+      <if test="record.observaciones != null" >
+        observaciones = #{record.observaciones,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update recibo
+    set codRecibo = #{record.codRecibo,jdbcType=VARCHAR},
+      idAlumno = #{record.idAlumno,jdbcType=INTEGER},
+      mes = #{record.mes,jdbcType=INTEGER},
+      anyo = #{record.anyo,jdbcType=INTEGER},
+      fechaEmision = #{record.fechaEmision,jdbcType=DATE},
+      fechaPago = #{record.fechaPago,jdbcType=DATE},
+      cantidadTotal = #{record.cantidadTotal,jdbcType=REAL},
+      observaciones = #{record.observaciones,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rafavilchez.model.ReciboBase" >
+    update recibo
+    <set >
+      <if test="idAlumno != null" >
+        idAlumno = #{idAlumno,jdbcType=INTEGER},
+      </if>
+      <if test="mes != null" >
+        mes = #{mes,jdbcType=INTEGER},
+      </if>
+      <if test="anyo != null" >
+        anyo = #{anyo,jdbcType=INTEGER},
+      </if>
+      <if test="fechaEmision != null" >
+        fechaEmision = #{fechaEmision,jdbcType=DATE},
+      </if>
+      <if test="fechaPago != null" >
+        fechaPago = #{fechaPago,jdbcType=DATE},
+      </if>
+      <if test="cantidadTotal != null" >
+        cantidadTotal = #{cantidadTotal,jdbcType=REAL},
+      </if>
+      <if test="observaciones != null" >
+        observaciones = #{observaciones,jdbcType=REAL},
+      </if>
+    </set>
+    where codRecibo = #{codRecibo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rafavilchez.model.ReciboBase" >
+    update recibo
+    set idAlumno = #{idAlumno,jdbcType=INTEGER},
+      mes = #{mes,jdbcType=INTEGER},
+      anyo = #{anyo,jdbcType=INTEGER},
+      fechaEmision = #{fechaEmision,jdbcType=DATE},
+      fechaPago = #{fechaPago,jdbcType=DATE},
+      cantidadTotal = #{cantidadTotal,jdbcType=REAL},
+      observaciones = #{observaciones,jdbcType=REAL}
+    where codRecibo = #{codRecibo,jdbcType=VARCHAR}
+  </update>
+</mapper>

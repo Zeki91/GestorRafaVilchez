@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.impl.ReciboMapper">
+
+    <resultMap id="reciboResult" type="com.rafavilchez.model.impl.Recibo" extends="com.rafavilchez.persistence.ReciboBaseMapper.BaseResultMap">
+    </resultMap>
+
+    <resultMap id="reciboResultCompleto" type="com.rafavilchez.model.impl.Recibo" extends="com.rafavilchez.persistence.ReciboBaseMapper.BaseResultMap">
+        <association property="alumno" column="{idAlumno=idAlumno}" javaType="com.rafavilchez.model.impl.Alumno" select="com.rafavilchez.persistence.impl.AlumnoMapper.getAlumnoPorId"/>
+        <collection property="entradas" column="{codRecibo=codRecibo}" javaType="java.util.List" ofType="com.rafavilchez.model.impl.EntradaRecibo" select="com.rafavilchez.persistence.impl.EntradaReciboMapper.getEntradasReciboPorCodRecibo"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="reciboResultCompleto"  parameterType="map" >
+        select r.*
+        from recibo r
+        ORDER BY r.anyo DESC, r.mes DESC, r.fechaEmision DESC
+    </select>
+
+    <select id="getFiltered" resultMap="reciboResultCompleto"  parameterType="map" >
+        SELECT *
+        FROM recibo r
+        WHERE 1=1
+        <if test="filtroPagado != 0">
+            AND r.fechaPago IS <if test="filtroPagado == 1"> NOT </if> null
+        </if>
+        <if test="filtroAnyo != null">
+            AND r.anyo = ${filtroAnyo}
+        </if>
+        <if test="filtroMes != null">
+            AND r.mes = ${filtroMes}
+        </if>
+        <if test="filtroAlumno != null">
+            AND r.idAlumno IN (select a.idAlumno from alumno a where a.idAlumno = ${filtroAlumno})
+        </if>
+        ORDER BY r.fechaEmision DESC
+        <if test="page != null">
+            LIMIT 50 OFFSET ${page}
+        </if>
+    </select>
+
+    <select id="getReciboPorId" resultMap="reciboResultCompleto"  parameterType="map" >
+        select r.*
+        from recibo r
+        where r.codRecibo = '${codRecibo}'
+        ORDER BY r.mes DESC, r.anyo DESC, r.fechaEmision DESC
+    </select>
+
+    <select id="getRecibosPorIdAlumno" resultMap="reciboResultCompleto"  parameterType="map" >
+        select r.*
+        from recibo r
+        where r.idAlumno = ${idAlumno}
+        ORDER BY r.mes DESC, r.anyo DESC, r.fechaEmision DESC
+    </select>
+
+    <update id="actualizarImporteTotal" parameterType="map">
+        update recibo
+        set cantidadTotal = (select round(sum(er.cantidad),2) from entrada_recibo er where er.codRecibo = '${codRecibo}')
+        where codRecibo = '${codRecibo}'
+    </update>
+
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.impl.ProfesorMapper">
+
+    <resultMap id="profesorResult" type="com.rafavilchez.model.impl.Profesor" extends="com.rafavilchez.persistence.ProfesorBaseMapper.BaseResultMap">
+    </resultMap>
+
+    <select id="getPorId" resultMap="profesorResult"  parameterType="map" >
+        select p.*
+        from profesor p
+        where p.idProfesor = ${idProfesor}
+    </select>
+
+</mapper>

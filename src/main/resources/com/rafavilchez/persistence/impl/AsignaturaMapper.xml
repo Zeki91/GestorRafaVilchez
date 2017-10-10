@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.impl.AsignaturaMapper">
+
+    <resultMap id="asignaturaResult" type="com.rafavilchez.model.impl.Asignatura" extends="com.rafavilchez.persistence.AsignaturaBaseMapper.BaseResultMap">
+    </resultMap>
+
+    <resultMap id="asignaturaResultCompleta" type="com.rafavilchez.model.impl.Asignatura" extends="com.rafavilchez.persistence.AsignaturaBaseMapper.BaseResultMap">
+        <association property="profesor" column="{idProfesor=idProfesor}" javaType="com.rafavilchez.model.impl.Profesor"
+                     select="com.rafavilchez.persistence.impl.ProfesorMapper.getPorId"/>
+    </resultMap>
+
+    <select id="getAll" resultMap="asignaturaResultCompleta" parameterType="map">
+        select a.*
+        from asignatura a
+        order by a.nombre
+    </select>
+
+    <select id="getAsignaturaPorId" resultMap="asignaturaResultCompleta"  parameterType="map" >
+        select a.*, p.*
+        from asignatura a, profesor p
+        where a.idAsignatura = #{idAsignatura}
+        and a.idProfesor = p.idProfesor
+        order by a.nombre
+    </select>
+
+</mapper>

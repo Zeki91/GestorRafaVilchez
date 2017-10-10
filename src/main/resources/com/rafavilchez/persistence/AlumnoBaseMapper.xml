@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.AlumnoBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.rafavilchez.model.AlumnoBase" >
+    <id column="idAlumno" property="idAlumno" jdbcType="INTEGER" />
+    <result column="nombre" property="nombre" jdbcType="VARCHAR" />
+    <result column="apellidos" property="apellidos" jdbcType="VARCHAR" />
+    <result column="telefono" property="telefono" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="nif" property="nif" jdbcType="VARCHAR" />
+    <result column="direccion" property="direccion" jdbcType="VARCHAR" />
+    <result column="cp" property="cp" jdbcType="VARCHAR" />
+    <result column="poblacion" property="poblacion" jdbcType="VARCHAR" />
+    <result column="provincia" property="provincia" jdbcType="VARCHAR" />
+    <result column="rrss" property="rrss" jdbcType="BIT" />
+    <result column="vulebu" property="vulebu" jdbcType="BIT" />
+    <result column="activo" property="activo" jdbcType="BIT" />
+    <result column="createdAt" property="createdAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idAlumno, nombre, apellidos, telefono, email, nif, direccion, cp, poblacion, provincia, 
+    rrss, vulebu, activo, createdAt
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.rafavilchez.model.AlumnoBaseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from alumno
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from alumno
+    where idAlumno = #{idAlumno,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from alumno
+    where idAlumno = #{idAlumno,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.rafavilchez.model.AlumnoBaseExample" >
+    delete from alumno
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.rafavilchez.model.AlumnoBase" >
+    <selectKey resultType="java.lang.Integer" keyProperty="idAlumno" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into alumno (nombre, apellidos, telefono, 
+      email, nif, direccion, 
+      cp, poblacion, provincia, 
+      rrss, vulebu, activo, createdAt
+      )
+    values (#{nombre,jdbcType=VARCHAR}, #{apellidos,jdbcType=VARCHAR}, #{telefono,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{nif,jdbcType=VARCHAR}, #{direccion,jdbcType=VARCHAR}, 
+      #{cp,jdbcType=VARCHAR}, #{poblacion,jdbcType=VARCHAR}, #{provincia,jdbcType=VARCHAR}, 
+      #{rrss,jdbcType=BIT}, #{vulebu,jdbcType=BIT}, #{activo,jdbcType=BIT}, #{createdAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.rafavilchez.model.AlumnoBase" >
+    <selectKey resultType="java.lang.Integer" keyProperty="idAlumno" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into alumno
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nombre != null" >
+        nombre,
+      </if>
+      <if test="apellidos != null" >
+        apellidos,
+      </if>
+      <if test="telefono != null" >
+        telefono,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="nif != null" >
+        nif,
+      </if>
+      <if test="direccion != null" >
+        direccion,
+      </if>
+      <if test="cp != null" >
+        cp,
+      </if>
+      <if test="poblacion != null" >
+        poblacion,
+      </if>
+      <if test="provincia != null" >
+        provincia,
+      </if>
+      <if test="rrss != null" >
+        rrss,
+      </if>
+      <if test="vulebu != null" >
+        vulebu,
+      </if>
+      <if test="activo != null" >
+        activo,
+      </if>
+      <if test="createdAt != null" >
+        createdAt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nombre != null" >
+        #{nombre,jdbcType=VARCHAR},
+      </if>
+      <if test="apellidos != null" >
+        #{apellidos,jdbcType=VARCHAR},
+      </if>
+      <if test="telefono != null" >
+        #{telefono,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="nif != null" >
+        #{nif,jdbcType=VARCHAR},
+      </if>
+      <if test="direccion != null" >
+        #{direccion,jdbcType=VARCHAR},
+      </if>
+      <if test="cp != null" >
+        #{cp,jdbcType=VARCHAR},
+      </if>
+      <if test="poblacion != null" >
+        #{poblacion,jdbcType=VARCHAR},
+      </if>
+      <if test="provincia != null" >
+        #{provincia,jdbcType=VARCHAR},
+      </if>
+      <if test="rrss != null" >
+        #{rrss,jdbcType=BIT},
+      </if>
+      <if test="vulebu != null" >
+        #{vulebu,jdbcType=BIT},
+      </if>
+      <if test="activo != null" >
+        #{activo,jdbcType=BIT},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.rafavilchez.model.AlumnoBaseExample" resultType="java.lang.Integer" >
+    select count(*) from alumno
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update alumno
+    <set >
+      <if test="record.idAlumno != null" >
+        idAlumno = #{record.idAlumno,jdbcType=INTEGER},
+      </if>
+      <if test="record.nombre != null" >
+        nombre = #{record.nombre,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apellidos != null" >
+        apellidos = #{record.apellidos,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telefono != null" >
+        telefono = #{record.telefono,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nif != null" >
+        nif = #{record.nif,jdbcType=VARCHAR},
+      </if>
+      <if test="record.direccion != null" >
+        direccion = #{record.direccion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cp != null" >
+        cp = #{record.cp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.poblacion != null" >
+        poblacion = #{record.poblacion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provincia != null" >
+        provincia = #{record.provincia,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rrss != null" >
+        rrss = #{record.rrss,jdbcType=BIT},
+      </if>
+      <if test="record.vulebu != null" >
+        vulebu = #{record.vulebu,jdbcType=BIT},
+      </if>
+      <if test="record.activo != null" >
+        activo = #{record.activo,jdbcType=BIT},
+      </if>
+      <if test="record.createdAt != null" >
+        createdAt = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update alumno
+    set idAlumno = #{record.idAlumno,jdbcType=INTEGER},
+      nombre = #{record.nombre,jdbcType=VARCHAR},
+      apellidos = #{record.apellidos,jdbcType=VARCHAR},
+      telefono = #{record.telefono,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      nif = #{record.nif,jdbcType=VARCHAR},
+      direccion = #{record.direccion,jdbcType=VARCHAR},
+      cp = #{record.cp,jdbcType=VARCHAR},
+      poblacion = #{record.poblacion,jdbcType=VARCHAR},
+      provincia = #{record.provincia,jdbcType=VARCHAR},
+      rrss = #{record.rrss,jdbcType=BIT},
+      vulebu = #{record.vulebu,jdbcType=BIT},
+      activo = #{record.activo,jdbcType=BIT},
+      createdAt = #{record.createdAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rafavilchez.model.AlumnoBase" >
+    update alumno
+    <set >
+      <if test="nombre != null" >
+        nombre = #{nombre,jdbcType=VARCHAR},
+      </if>
+      <if test="apellidos != null" >
+        apellidos = #{apellidos,jdbcType=VARCHAR},
+      </if>
+      <if test="telefono != null" >
+        telefono = #{telefono,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="nif != null" >
+        nif = #{nif,jdbcType=VARCHAR},
+      </if>
+      <if test="direccion != null" >
+        direccion = #{direccion,jdbcType=VARCHAR},
+      </if>
+      <if test="cp != null" >
+        cp = #{cp,jdbcType=VARCHAR},
+      </if>
+      <if test="poblacion != null" >
+        poblacion = #{poblacion,jdbcType=VARCHAR},
+      </if>
+      <if test="provincia != null" >
+        provincia = #{provincia,jdbcType=VARCHAR},
+      </if>
+      <if test="rrss != null" >
+        rrss = #{rrss,jdbcType=BIT},
+      </if>
+      <if test="vulebu != null" >
+        vulebu = #{vulebu,jdbcType=BIT},
+      </if>
+      <if test="activo != null" >
+        activo = #{activo,jdbcType=BIT},
+      </if>
+      <if test="createdAt != null" >
+        createdAt = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where idAlumno = #{idAlumno,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rafavilchez.model.AlumnoBase" >
+    update alumno
+    set nombre = #{nombre,jdbcType=VARCHAR},
+      apellidos = #{apellidos,jdbcType=VARCHAR},
+      telefono = #{telefono,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      nif = #{nif,jdbcType=VARCHAR},
+      direccion = #{direccion,jdbcType=VARCHAR},
+      cp = #{cp,jdbcType=VARCHAR},
+      poblacion = #{poblacion,jdbcType=VARCHAR},
+      provincia = #{provincia,jdbcType=VARCHAR},
+      rrss = #{rrss,jdbcType=BIT},
+      vulebu = #{vulebu,jdbcType=BIT},
+      activo = #{activo,jdbcType=BIT},
+      createdAt = #{createdAt,jdbcType=TIMESTAMP}
+    where idAlumno = #{idAlumno,jdbcType=INTEGER}
+  </update>
+</mapper>

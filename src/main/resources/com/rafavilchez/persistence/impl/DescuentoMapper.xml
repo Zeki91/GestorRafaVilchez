@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.impl.DescuentoMapper">
+
+    <resultMap id="descuentoResult" type="com.rafavilchez.model.impl.Descuento" extends="com.rafavilchez.persistence.DescuentoBaseMapper.BaseResultMap">
+    </resultMap>
+
+    <select id="getDescuentoPorId" resultMap="descuentoResult"  parameterType="map" >
+        select d.*
+        from descuento d
+        where d.idDescuento = ${idDescuento}
+    </select>
+
+</mapper>

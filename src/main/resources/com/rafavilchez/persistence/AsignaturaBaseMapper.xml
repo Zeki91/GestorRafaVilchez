@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.AsignaturaBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.rafavilchez.model.AsignaturaBase" >
+    <id column="idAsignatura" property="idAsignatura" jdbcType="INTEGER" />
+    <result column="nombre" property="nombre" jdbcType="VARCHAR" />
+    <result column="precioBruto" property="precioBruto" jdbcType="REAL" />
+    <result column="idProfesor" property="idProfesor" jdbcType="INTEGER" />
+    <result column="descuento" property="descuento" jdbcType="BIT" />
+    <result column="createdAt" property="createdAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idAsignatura, nombre, precioBruto, idProfesor, descuento, createdAt
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.rafavilchez.model.AsignaturaBaseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from asignatura
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from asignatura
+    where idAsignatura = #{idAsignatura,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from asignatura
+    where idAsignatura = #{idAsignatura,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.rafavilchez.model.AsignaturaBaseExample" >
+    delete from asignatura
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.rafavilchez.model.AsignaturaBase" >
+    <selectKey resultType="java.lang.Integer" keyProperty="idAsignatura" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into asignatura (nombre, precioBruto, idProfesor, 
+      descuento, createdAt)
+    values (#{nombre,jdbcType=VARCHAR}, #{precioBruto,jdbcType=REAL}, #{idProfesor,jdbcType=INTEGER}, 
+      #{descuento,jdbcType=BIT}, #{createdAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rafavilchez.model.AsignaturaBase" >
+    <selectKey resultType="java.lang.Integer" keyProperty="idAsignatura" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into asignatura
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nombre != null" >
+        nombre,
+      </if>
+      <if test="precioBruto != null" >
+        precioBruto,
+      </if>
+      <if test="idProfesor != null" >
+        idProfesor,
+      </if>
+      <if test="descuento != null" >
+        descuento,
+      </if>
+      <if test="createdAt != null" >
+        createdAt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nombre != null" >
+        #{nombre,jdbcType=VARCHAR},
+      </if>
+      <if test="precioBruto != null" >
+        #{precioBruto,jdbcType=REAL},
+      </if>
+      <if test="idProfesor != null" >
+        #{idProfesor,jdbcType=INTEGER},
+      </if>
+      <if test="descuento != null" >
+        #{descuento,jdbcType=BIT},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.rafavilchez.model.AsignaturaBaseExample" resultType="java.lang.Integer" >
+    select count(*) from asignatura
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update asignatura
+    <set >
+      <if test="record.idAsignatura != null" >
+        idAsignatura = #{record.idAsignatura,jdbcType=INTEGER},
+      </if>
+      <if test="record.nombre != null" >
+        nombre = #{record.nombre,jdbcType=VARCHAR},
+      </if>
+      <if test="record.precioBruto != null" >
+        precioBruto = #{record.precioBruto,jdbcType=REAL},
+      </if>
+      <if test="record.idProfesor != null" >
+        idProfesor = #{record.idProfesor,jdbcType=INTEGER},
+      </if>
+      <if test="record.descuento != null" >
+        descuento = #{record.descuento,jdbcType=BIT},
+      </if>
+      <if test="record.createdAt != null" >
+        createdAt = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update asignatura
+    set idAsignatura = #{record.idAsignatura,jdbcType=INTEGER},
+      nombre = #{record.nombre,jdbcType=VARCHAR},
+      precioBruto = #{record.precioBruto,jdbcType=REAL},
+      idProfesor = #{record.idProfesor,jdbcType=INTEGER},
+      descuento = #{record.descuento,jdbcType=BIT},
+      createdAt = #{record.createdAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rafavilchez.model.AsignaturaBase" >
+    update asignatura
+    <set >
+      <if test="nombre != null" >
+        nombre = #{nombre,jdbcType=VARCHAR},
+      </if>
+      <if test="precioBruto != null" >
+        precioBruto = #{precioBruto,jdbcType=REAL},
+      </if>
+      <if test="idProfesor != null" >
+        idProfesor = #{idProfesor,jdbcType=INTEGER},
+      </if>
+      <if test="descuento != null" >
+        descuento = #{descuento,jdbcType=BIT},
+      </if>
+      <if test="createdAt != null" >
+        createdAt = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where idAsignatura = #{idAsignatura,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rafavilchez.model.AsignaturaBase" >
+    update asignatura
+    set nombre = #{nombre,jdbcType=VARCHAR},
+      precioBruto = #{precioBruto,jdbcType=REAL},
+      idProfesor = #{idProfesor,jdbcType=INTEGER},
+      descuento = #{descuento,jdbcType=BIT},
+      createdAt = #{createdAt,jdbcType=TIMESTAMP}
+    where idAsignatura = #{idAsignatura,jdbcType=INTEGER}
+  </update>
+</mapper>

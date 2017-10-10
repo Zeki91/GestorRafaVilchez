@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.EntradaReciboBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.rafavilchez.model.EntradaReciboBase" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="codRecibo" property="codRecibo" jdbcType="VARCHAR" />
+    <result column="tipoEntrada" property="tipoEntrada" jdbcType="INTEGER" />
+    <result column="concepto" property="concepto" jdbcType="VARCHAR" />
+    <result column="tipoDescuento" property="tipoDescuento" jdbcType="VARCHAR" />
+    <result column="descuento" property="descuento" jdbcType="REAL" />
+    <result column="cantidad" property="cantidad" jdbcType="REAL" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.rafavilchez.model.EntradaReciboBase" extends="BaseResultMap" >
+    <result column="observaciones" property="observaciones" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, codRecibo, tipoEntrada, concepto, tipoDescuento, descuento, cantidad
+  </sql>
+  <sql id="Blob_Column_List" >
+    observaciones
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.rafavilchez.model.EntradaReciboBaseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from entrada_recibo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.rafavilchez.model.EntradaReciboBaseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from entrada_recibo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from entrada_recibo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from entrada_recibo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.rafavilchez.model.EntradaReciboBaseExample" >
+    delete from entrada_recibo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.rafavilchez.model.EntradaReciboBase" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into entrada_recibo (codRecibo, tipoEntrada, concepto, 
+      tipoDescuento, descuento, cantidad, 
+      observaciones)
+    values (#{codRecibo,jdbcType=VARCHAR}, #{tipoEntrada,jdbcType=INTEGER}, #{concepto,jdbcType=VARCHAR}, 
+      #{tipoDescuento,jdbcType=VARCHAR}, #{descuento,jdbcType=REAL}, #{cantidad,jdbcType=REAL}, 
+      #{observaciones,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rafavilchez.model.EntradaReciboBase" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into entrada_recibo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="codRecibo != null" >
+        codRecibo,
+      </if>
+      <if test="tipoEntrada != null" >
+        tipoEntrada,
+      </if>
+      <if test="concepto != null" >
+        concepto,
+      </if>
+      <if test="tipoDescuento != null" >
+        tipoDescuento,
+      </if>
+      <if test="descuento != null" >
+        descuento,
+      </if>
+      <if test="cantidad != null" >
+        cantidad,
+      </if>
+      <if test="observaciones != null" >
+        observaciones,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="codRecibo != null" >
+        #{codRecibo,jdbcType=VARCHAR},
+      </if>
+      <if test="tipoEntrada != null" >
+        #{tipoEntrada,jdbcType=INTEGER},
+      </if>
+      <if test="concepto != null" >
+        #{concepto,jdbcType=VARCHAR},
+      </if>
+      <if test="tipoDescuento != null" >
+        #{tipoDescuento,jdbcType=VARCHAR},
+      </if>
+      <if test="descuento != null" >
+        #{descuento,jdbcType=REAL},
+      </if>
+      <if test="cantidad != null" >
+        #{cantidad,jdbcType=REAL},
+      </if>
+      <if test="observaciones != null" >
+        #{observaciones,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.rafavilchez.model.EntradaReciboBaseExample" resultType="java.lang.Integer" >
+    select count(*) from entrada_recibo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update entrada_recibo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.codRecibo != null" >
+        codRecibo = #{record.codRecibo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tipoEntrada != null" >
+        tipoEntrada = #{record.tipoEntrada,jdbcType=INTEGER},
+      </if>
+      <if test="record.concepto != null" >
+        concepto = #{record.concepto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tipoDescuento != null" >
+        tipoDescuento = #{record.tipoDescuento,jdbcType=VARCHAR},
+      </if>
+      <if test="record.descuento != null" >
+        descuento = #{record.descuento,jdbcType=REAL},
+      </if>
+      <if test="record.cantidad != null" >
+        cantidad = #{record.cantidad,jdbcType=REAL},
+      </if>
+      <if test="record.observaciones != null" >
+        observaciones = #{record.observaciones,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update entrada_recibo
+    set id = #{record.id,jdbcType=INTEGER},
+      codRecibo = #{record.codRecibo,jdbcType=VARCHAR},
+      tipoEntrada = #{record.tipoEntrada,jdbcType=INTEGER},
+      concepto = #{record.concepto,jdbcType=VARCHAR},
+      tipoDescuento = #{record.tipoDescuento,jdbcType=VARCHAR},
+      descuento = #{record.descuento,jdbcType=REAL},
+      cantidad = #{record.cantidad,jdbcType=REAL},
+      observaciones = #{record.observaciones,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update entrada_recibo
+    set id = #{record.id,jdbcType=INTEGER},
+      codRecibo = #{record.codRecibo,jdbcType=VARCHAR},
+      tipoEntrada = #{record.tipoEntrada,jdbcType=INTEGER},
+      concepto = #{record.concepto,jdbcType=VARCHAR},
+      tipoDescuento = #{record.tipoDescuento,jdbcType=VARCHAR},
+      descuento = #{record.descuento,jdbcType=REAL},
+      cantidad = #{record.cantidad,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rafavilchez.model.EntradaReciboBase" >
+    update entrada_recibo
+    <set >
+      <if test="codRecibo != null" >
+        codRecibo = #{codRecibo,jdbcType=VARCHAR},
+      </if>
+      <if test="tipoEntrada != null" >
+        tipoEntrada = #{tipoEntrada,jdbcType=INTEGER},
+      </if>
+      <if test="concepto != null" >
+        concepto = #{concepto,jdbcType=VARCHAR},
+      </if>
+      <if test="tipoDescuento != null" >
+        tipoDescuento = #{tipoDescuento,jdbcType=VARCHAR},
+      </if>
+      <if test="descuento != null" >
+        descuento = #{descuento,jdbcType=REAL},
+      </if>
+      <if test="cantidad != null" >
+        cantidad = #{cantidad,jdbcType=REAL},
+      </if>
+      <if test="observaciones != null" >
+        observaciones = #{observaciones,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.rafavilchez.model.EntradaReciboBase" >
+    update entrada_recibo
+    set codRecibo = #{codRecibo,jdbcType=VARCHAR},
+      tipoEntrada = #{tipoEntrada,jdbcType=INTEGER},
+      concepto = #{concepto,jdbcType=VARCHAR},
+      tipoDescuento = #{tipoDescuento,jdbcType=VARCHAR},
+      descuento = #{descuento,jdbcType=REAL},
+      cantidad = #{cantidad,jdbcType=REAL},
+      observaciones = #{observaciones,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rafavilchez.model.EntradaReciboBase" >
+    update entrada_recibo
+    set codRecibo = #{codRecibo,jdbcType=VARCHAR},
+      tipoEntrada = #{tipoEntrada,jdbcType=INTEGER},
+      concepto = #{concepto,jdbcType=VARCHAR},
+      tipoDescuento = #{tipoDescuento,jdbcType=VARCHAR},
+      descuento = #{descuento,jdbcType=REAL},
+      cantidad = #{cantidad,jdbcType=REAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

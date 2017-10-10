@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="GestorAcademia:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="GestorRafaVilchez.war">
+      <element id="artifact" artifact-name="GestorAcademia:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.impl.MovimientoMapper">
+
+    <resultMap id="movimientoResult" type="com.rafavilchez.model.impl.Movimiento" extends="com.rafavilchez.persistence.MovimientoBaseMapper.BaseResultMap">
+    </resultMap>
+
+    <select id="selectAll" resultMap="movimientoResult"  parameterType="map" >
+        select m.*
+        from movimiento m
+        ORDER BY m.fecha DESC
+    </select>
+
+    <select id="selectBetweenDates" resultMap="movimientoResult"  parameterType="map" >
+        select * from movimiento
+        where (fecha between '${desde}' and '${hasta}')
+        ORDER BY fecha DESC
+    </select>
+
+</mapper>

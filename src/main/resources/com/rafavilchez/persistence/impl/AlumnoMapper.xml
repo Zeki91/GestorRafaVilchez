@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.impl.AlumnoMapper">
+
+    <resultMap id="alumnoResult" type="com.rafavilchez.model.impl.Alumno" extends="com.rafavilchez.persistence.AlumnoBaseMapper.BaseResultMap">
+    </resultMap>
+
+    <resultMap id="alumnoResultCompleto" type="com.rafavilchez.model.impl.Alumno" extends="com.rafavilchez.persistence.AlumnoBaseMapper.BaseResultMap">
+        <collection property="asignaturasMatriculadas" column="{idAlumno=idAlumno}" javaType="java.util.List" ofType="com.rafavilchez.model.impl.AlumnoAsignatura" select="getAsignaturasMatriculadas"/>
+        <collection property="historicoAsignaturas" column="{idAlumno=idAlumno}" javaType="java.util.List" ofType="com.rafavilchez.model.impl.AlumnoAsignatura" select="getHistoricoAsignaturas"/>
+        <collection property="descuentos" column="{idAlumno=idAlumno}" javaType="java.util.List" ofType="com.rafavilchez.model.impl.DescuentosAlumnos" select="selectDescuentos"/>
+    </resultMap>
+
+    <select id="getAlumnoPorId" resultMap="alumnoResultCompleto"  parameterType="map" >
+        select a.*
+        from alumno a
+        where a.idAlumno = ${idAlumno}
+        order by a.nombre, a.apellidos
+    </select>
+
+    <select id="getAsignaturasMatriculadas" resultMap="com.rafavilchez.persistence.impl.AlumnoAsignaturaMapper.alumnoAsignaturaResultConAsignatura" parameterType="map">
+	    select aa.*
+        from alumno_asignatura aa
+        where aa.idAlumno = ${idAlumno}
+        and aa.fecha_fin is null
+    </select>
+
+    <select id="getHistoricoAsignaturas" resultMap="com.rafavilchez.persistence.impl.AlumnoAsignaturaMapper.alumnoAsignaturaResultConAsignatura" parameterType="map">
+        select aa.*
+        from alumno_asignatura aa
+        where aa.idAlumno = ${idAlumno}
+        and aa.fecha_fin is not null
+    </select>
+
+    <select id="selectDescuentos" resultMap="com.rafavilchez.persistence.impl.DescuentosAlumnosMapper.descuentosAlumnosResultSinAlumno" parameterType="map">
+        select da.*
+        from descuentos_alumnos da
+        where da.idAlumno = ${idAlumno}
+    </select>
+
+    <select id="getAll" resultMap="alumnoResultCompleto"  parameterType="map" >
+        select a.*
+        from alumno a
+        where a.activo = 1
+        order by a.nombre, a.apellidos
+    </select>
+
+    <select id="getFiltered" resultMap="alumnoResultCompleto" parameterType="map">
+        SELECT *
+        FROM gestor_academia.alumno a
+        WHERE (a.nombre LIKE '%${filtroNombre}%' OR a.apellidos LIKE '%${filtroNombre}%')
+        <if test="filtroAsignatura != null">
+            AND a.idAlumno IN (select aa.idAlumno from alumno_asignatura aa where aa.idAsignatura = ${filtroAsignatura} and aa.fecha_fin is NULL)
+        </if>
+        and a.activo = 1
+        order by a.nombre, a.apellidos
+    </select>
+
+    <select id="getAllOthers" resultMap="alumnoResultCompleto"  parameterType="map" >
+        select a.*
+        from alumno a
+        where not a.idAlumno = ${idAlumno} and a.activo = 1
+        order by a.nombre, a.apellidos
+    </select>
+
+    <select id="getAlumnoPorNIF" resultMap="alumnoResultCompleto"  parameterType="map" >
+        select a.*
+        from alumno a
+        where a.nif = ${nif} and activo = 1
+        order by a.nombre, a.apellidos
+    </select>
+
+    <update id="desactivarAlumno" parameterType="map">
+        update alumno
+        set activo = 0
+        where idAlumno = ${idAlumno}
+    </update>
+
+</mapper>

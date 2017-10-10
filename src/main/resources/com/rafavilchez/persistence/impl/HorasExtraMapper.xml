@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.impl.HorasExtraMapper">
+
+    <resultMap id="horasExtraResult" type="com.rafavilchez.model.impl.HorasExtra" extends="com.rafavilchez.persistence.HorasExtraBaseMapper.BaseResultMap">
+    </resultMap>
+
+    <resultMap id="horasExtraResultCompleta" type="com.rafavilchez.model.impl.HorasExtra" extends="com.rafavilchez.persistence.HorasExtraBaseMapper.BaseResultMap">
+        <association property="asignatura" column="{idAsignatura=idAsignatura}" javaType="com.rafavilchez.model.impl.Asignatura" select="com.rafavilchez.persistence.impl.AsignaturaMapper.getAsignaturaPorId"/>
+        <association property="alumno" column="{idAlumno=idAlumno}" javaType="com.rafavilchez.model.impl.Alumno" select="com.rafavilchez.persistence.impl.AlumnoMapper.getAlumnoPorId"/>
+    </resultMap>
+
+    <select id="getPorId" resultMap="horasExtraResultCompleta" parameterType="map">
+        select he.*, asig.*, alum.*
+        from horas_extra he, asignatura asig, alumno alum
+        where he.id = ${id}
+        and alum.idAlumno = he.idAlumno
+        and asig.idAsignatura = he.idAsignatura
+    </select>
+
+    <select id="getPorIdAlumno" resultMap="horasExtraResultCompleta"  parameterType="map" >
+        select he.*, asig.*, alum.*
+        from horas_extra he, asignatura asig, alumno alum
+        where he.idAlumno = ${idAlumno}
+        and alum.idAlumno = he.idAlumno
+        and asig.idAsignatura = he.idAsignatura
+    </select>
+
+    <select id="getPorIdAsignatura" resultMap="horasExtraResultCompleta"  parameterType="map" >
+        select he.*, asig.*, alum.*
+        from horas_extra he, asignatura asig, alumno alum
+        where he.idAsignatura = ${idAsignatura}
+        and alum.idAlumno = he.idAlumno
+        and asig.idAsignatura = he.idAsignatura
+    </select>
+
+    <select id="getPorIdAlumnoIdAsignatura" resultMap="horasExtraResultCompleta"  parameterType="map" >
+        select he.*, asig.*, alum.*
+        from horas_extra he, asignatura asig, alumno alum
+        where he.idAsignatura = ${idAsignatura}
+        and he.idAlumno = ${idAlumno}
+        and alum.idAlumno = he.idAlumno
+        and asig.idAsignatura = he.idAsignatura
+    </select>
+
+</mapper>

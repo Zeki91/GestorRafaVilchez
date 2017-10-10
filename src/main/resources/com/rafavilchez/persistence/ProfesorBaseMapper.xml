@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rafavilchez.persistence.ProfesorBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.rafavilchez.model.ProfesorBase" >
+    <id column="idProfesor" property="idProfesor" jdbcType="INTEGER" />
+    <result column="nombre" property="nombre" jdbcType="VARCHAR" />
+    <result column="apellidos" property="apellidos" jdbcType="VARCHAR" />
+    <result column="fechaNacimiento" property="fechaNacimiento" jdbcType="DATE" />
+    <result column="sueldo" property="sueldo" jdbcType="REAL" />
+    <result column="telefono" property="telefono" jdbcType="VARCHAR" />
+    <result column="cuentaBancaria" property="cuentaBancaria" jdbcType="VARCHAR" />
+    <result column="createdAt" property="createdAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    idProfesor, nombre, apellidos, fechaNacimiento, sueldo, telefono, cuentaBancaria, 
+    createdAt
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.rafavilchez.model.ProfesorBaseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from profesor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from profesor
+    where idProfesor = #{idProfesor,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from profesor
+    where idProfesor = #{idProfesor,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.rafavilchez.model.ProfesorBaseExample" >
+    delete from profesor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.rafavilchez.model.ProfesorBase" >
+    <selectKey resultType="java.lang.Integer" keyProperty="idProfesor" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into profesor (nombre, apellidos, fechaNacimiento, 
+      sueldo, telefono, cuentaBancaria, 
+      createdAt)
+    values (#{nombre,jdbcType=VARCHAR}, #{apellidos,jdbcType=VARCHAR}, #{fechaNacimiento,jdbcType=DATE}, 
+      #{sueldo,jdbcType=REAL}, #{telefono,jdbcType=VARCHAR}, #{cuentaBancaria,jdbcType=VARCHAR}, 
+      #{createdAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rafavilchez.model.ProfesorBase" >
+    <selectKey resultType="java.lang.Integer" keyProperty="idProfesor" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into profesor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nombre != null" >
+        nombre,
+      </if>
+      <if test="apellidos != null" >
+        apellidos,
+      </if>
+      <if test="fechaNacimiento != null" >
+        fechaNacimiento,
+      </if>
+      <if test="sueldo != null" >
+        sueldo,
+      </if>
+      <if test="telefono != null" >
+        telefono,
+      </if>
+      <if test="cuentaBancaria != null" >
+        cuentaBancaria,
+      </if>
+      <if test="createdAt != null" >
+        createdAt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nombre != null" >
+        #{nombre,jdbcType=VARCHAR},
+      </if>
+      <if test="apellidos != null" >
+        #{apellidos,jdbcType=VARCHAR},
+      </if>
+      <if test="fechaNacimiento != null" >
+        #{fechaNacimiento,jdbcType=DATE},
+      </if>
+      <if test="sueldo != null" >
+        #{sueldo,jdbcType=REAL},
+      </if>
+      <if test="telefono != null" >
+        #{telefono,jdbcType=VARCHAR},
+      </if>
+      <if test="cuentaBancaria != null" >
+        #{cuentaBancaria,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.rafavilchez.model.ProfesorBaseExample" resultType="java.lang.Integer" >
+    select count(*) from profesor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update profesor
+    <set >
+      <if test="record.idProfesor != null" >
+        idProfesor = #{record.idProfesor,jdbcType=INTEGER},
+      </if>
+      <if test="record.nombre != null" >
+        nombre = #{record.nombre,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apellidos != null" >
+        apellidos = #{record.apellidos,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fechaNacimiento != null" >
+        fechaNacimiento = #{record.fechaNacimiento,jdbcType=DATE},
+      </if>
+      <if test="record.sueldo != null" >
+        sueldo = #{record.sueldo,jdbcType=REAL},
+      </if>
+      <if test="record.telefono != null" >
+        telefono = #{record.telefono,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cuentaBancaria != null" >
+        cuentaBancaria = #{record.cuentaBancaria,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdAt != null" >
+        createdAt = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update profesor
+    set idProfesor = #{record.idProfesor,jdbcType=INTEGER},
+      nombre = #{record.nombre,jdbcType=VARCHAR},
+      apellidos = #{record.apellidos,jdbcType=VARCHAR},
+      fechaNacimiento = #{record.fechaNacimiento,jdbcType=DATE},
+      sueldo = #{record.sueldo,jdbcType=REAL},
+      telefono = #{record.telefono,jdbcType=VARCHAR},
+      cuentaBancaria = #{record.cuentaBancaria,jdbcType=VARCHAR},
+      createdAt = #{record.createdAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rafavilchez.model.ProfesorBase" >
+    update profesor
+    <set >
+      <if test="nombre != null" >
+        nombre = #{nombre,jdbcType=VARCHAR},
+      </if>
+      <if test="apellidos != null" >
+        apellidos = #{apellidos,jdbcType=VARCHAR},
+      </if>
+      <if test="fechaNacimiento != null" >
+        fechaNacimiento = #{fechaNacimiento,jdbcType=DATE},
+      </if>
+      <if test="sueldo != null" >
+        sueldo = #{sueldo,jdbcType=REAL},
+      </if>
+      <if test="telefono != null" >
+        telefono = #{telefono,jdbcType=VARCHAR},
+      </if>
+      <if test="cuentaBancaria != null" >
+        cuentaBancaria = #{cuentaBancaria,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        createdAt = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where idProfesor = #{idProfesor,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rafavilchez.model.ProfesorBase" >
+    update profesor
+    set nombre = #{nombre,jdbcType=VARCHAR},
+      apellidos = #{apellidos,jdbcType=VARCHAR},
+      fechaNacimiento = #{fechaNacimiento,jdbcType=DATE},
+      sueldo = #{sueldo,jdbcType=REAL},
+      telefono = #{telefono,jdbcType=VARCHAR},
+      cuentaBancaria = #{cuentaBancaria,jdbcType=VARCHAR},
+      createdAt = #{createdAt,jdbcType=TIMESTAMP}
+    where idProfesor = #{idProfesor,jdbcType=INTEGER}
+  </update>
+</mapper>

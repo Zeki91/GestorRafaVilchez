@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<classPathEntry location="/usr/share/java/mysql-connector-java-5.1.38.jar" />
+
+	<context id="MySqlTables" targetRuntime="MyBatis3">
+	
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<property name="suppressAllComments" value="true"/>
+		</commentGenerator>
+	
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/gestor_academia" userId="admin" password="_gestor_academia_">
+		</jdbcConnection>
+		
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="true" />
+		</javaTypeResolver>
+
+		<javaModelGenerator targetPackage="com.rafavilchez.model" targetProject="/home/zeki/Proyectos/GestorAcademia/src/main/java"/>
+		<sqlMapGenerator targetPackage="com.rafavilchez.persistence" targetProject="/home/zeki/Proyectos/GestorAcademia/src/main/resources" />
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.rafavilchez.persistence" targetProject="/home/zeki/Proyectos/GestorAcademia/src/main/java" />
+
+
+		<table schema="gestor_academia" tableName="alumno" domainObjectName="AlumnoBase">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="idAlumno" sqlStatement="MySql" identity="true" />
+		</table>
+
+        <table schema="gestor_academia" tableName="asignatura" domainObjectName="AsignaturaBase">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="idAsignatura" sqlStatement="MySql" identity="true" />
+        </table>
+
+        <table schema="gestor_academia" tableName="profesor" domainObjectName="ProfesorBase">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="idProfesor" sqlStatement="MySql" identity="true" />
+        </table>
+
+		<table schema="gestor_academia" tableName="usuario" domainObjectName="UsuarioBase">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="idUsuario" sqlStatement="MySql" identity="true" />
+		</table>
+
+        <table schema="gestor_academia" tableName="alumno_asignatura" domainObjectName="AlumnoAsignaturaBase">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
+        </table>
+
+		<table schema="gestor_academia" tableName="historico_alumno_asignatura" domainObjectName="HistoricoAlumnoAsignaturaBase">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="id" sqlStatement="MySql" identity="true" />
+		</table>
+
+		<table schema="gestor_academia" tableName="descuento" domainObjectName="DescuentoBase">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="idDescuento" sqlStatement="MySql" identity="true" />
+		</table>
+
+		<table schema="gestor_academia" tableName="descuentos_alumnos" domainObjectName="DescuentosAlumnosBase">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="id" sqlStatement="MySql" identity="true" />
+		</table>
+
+		<table schema="gestor_academia" tableName="horas_extra" domainObjectName="HorasExtraBase">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="id" sqlStatement="MySql" identity="true" />
+		</table>
+
+		<table schema="gestor_academia" tableName="recibo" domainObjectName="ReciboBase">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="cod" sqlStatement="MySql" identity="true" />
+		</table>
+
+		<table schema="gestor_academia" tableName="entrada_recibo" domainObjectName="EntradaReciboBase">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="id" sqlStatement="MySql" identity="true" />
+		</table>
+
+		<table schema="gestor_academia" tableName="movimiento" domainObjectName="MovimientoBase">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="idMovimiento" sqlStatement="MySql" identity="true" />
+		</table>
+
+		<table schema="gestor_academia" tableName="caja" domainObjectName="CajaBase">
+			<property name="useActualColumnNames" value="true" />
+		</table>
+				
+	</context>
+</generatorConfiguration>
